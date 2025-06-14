@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Browse Items - Barter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .item-card {
+        transition: all 0.3s ease;
+        background: linear-gradient(to bottom right, #f0fdf4, #ecfdf5);
+      }
+
+      .item-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.75);
+        z-index: 100;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 0.5rem;
+        max-width: 800px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav
+      class="flex justify-between items-center bg-green-800 text-white fixed w-full top-0 left-0 right-0 z-50 shadow-md px-8 py-4"
+    >
+      <div
+        class="text-3xl font-bold bg-gradient-to-r from-green-400 via-green-500 to-green-600 bg-clip-text text-transparent tracking-tight"
+      >
+        BARTER
+      </div>
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center">
+        <!-- Nav Links -->
+        <div class="flex space-x-6 mr-6">
+          <a
+            href="index.html"
+            class="text-green-100 hover:text-white font-medium"
+            >Home</a
+          >
+          <a
+            href="browse-items.html"
+            class="text-white font-medium pb-1 border-b-2 border-white"
+            >Browse Items</a
+          >
+          <a
+            href="dashboard.html"
+            class="text-green-100 hover:text-white font-medium"
+            >Dashboard</a
+          >
+        </div>
+
+        <!-- Search and Sign In -->
+        <div class="flex items-center">
+          <input
+            type="text"
+            placeholder="Search..."
+            class="px-3 py-1 rounded text-gray-800 focus:outline-none focus:ring-1 focus:ring-green-500"
+          />
+          <button
+            class="ml-3 px-4 py-1 bg-green-600 hover:bg-green-700 text-white rounded font-medium"
+          >
+            <a href="signin.html">Sign In</a>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden flex items-center">
+        <button class="text-white hover:text-gray-200 focus:outline-none">
+          <svg
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-16">
+      <div class="mb-8 text-center">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">
+          Browse Available Items
+        </h1>
+        <p class="text-lg text-gray-600">
+          Find what you need, trade what you have
+        </p>
+      </div>
+
+      <!-- Search and Filter -->
+      <div class="mb-8 bg-white p-4 rounded-lg shadow-sm">
+        <div class="flex flex-col sm:flex-row gap-4">
+          <div class="flex-1 relative">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search items..."
+              class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500"
+            />
+            <div
+              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+            >
+              <svg
+                class="h-5 w-5 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <select
+            id="locationFilter"
+            class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-green-500 focus:border-green-500"
+          >
+            <option value="">All Locations</option>
+            <!-- Locations will be populated by JS -->
+          </select>
+        </div>
+      </div>
+
+      <!-- Items Grid -->
+      <div
+        id="itemsContainer"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+      >
+        <!-- Loading spinner -->
+        <div class="col-span-full text-center py-12">
+          <div
+            class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"
+          ></div>
+          <p class="mt-3 text-gray-600">Loading items...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image Modal (hidden by default) -->
+    <div id="imageModal" class="hidden modal-overlay">
+      <div class="modal-content">
+        <div class="p-4">
+          <button
+            onclick="closeImageModal()"
+            class="float-right text-gray-500 hover:text-gray-700 mb-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+          <img
+            id="modalImage"
+            src=""
+            alt="Enlarged item image"
+            class="w-full h-auto max-h-[70vh] object-contain"
+          />
+          <div class="mt-4 text-center">
+            <button
+              onclick="closeImageModal()"
+              class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Global variable to store current items
+      let allItems = [];
+
+      // Fetch and display items
+      async function loadItems() {
+        try {
+          const response = await fetch("http://localhost:5000/items");
+          allItems = await response.json();
+
+          // Add this debug log:
+          console.log("First item received:", {
+            title: allItems[0]?.title,
+            user_email: allItems[0]?.user_email,
+            user_name: allItems[0]?.user_name,
+          });
+
+          const container = document.getElementById("itemsContainer");
+
+          if (allItems.length === 0) {
+            container.innerHTML = `
+                        <div class="col-span-full text-center py-12">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                            </svg>
+                            <h3 class="mt-4 text-lg font-medium text-gray-900">No items available</h3>
+                            <p class="mt-1 text-gray-500">Be the first to list an item!</p>
+                        </div>
+                    `;
+            return;
+          }
+
+          // Populate location filter
+          const locations = [
+            ...new Set(
+              allItems.map((item) => item.pickup_location).filter(Boolean)
+            ),
+          ];
+          const locationFilter = document.getElementById("locationFilter");
+          locations.forEach((location) => {
+            const option = document.createElement("option");
+            option.value = location;
+            option.textContent = location;
+            locationFilter.appendChild(option);
+          });
+
+          // Display items
+          /*container.innerHTML = allItems.map(item => `
+                    <div class="item-card bg-white rounded-lg overflow-hidden shadow-md border border-gray-100">
+                        <div class="h-48 bg-gray-100 overflow-hidden">
+                            ${item.image_url ? `
+                                <img src="${item.image_url}" alt="${item.title}" 
+                                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
+                                     onclick="showImageModal('${item.image_url}')">
+                            ` : `
+                                <div class="w-full h-full flex items-center justify-center bg-gray-100 cursor-pointer"
+                                     onclick="showImageModal('')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                            `}
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-lg text-gray-900 truncate">${item.title}</h3>
+                            <p class="text-gray-600 mt-1 line-clamp-2">${item.description}</p>
+                            
+                            <div class="mt-4 pt-4 border-t border-gray-100">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm font-medium text-gray-900">${item.user_name}</span>
+                                    <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">${item.pickup_location || 'No location'}</span>
+                                </div>
+                                <p class="mt-2 text-sm text-gray-700">
+                                    <span class="font-medium">Wants:</span> ${item.exchange_for || 'Anything'}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');*/
+          container.innerHTML = allItems
+            .map((item) => {
+              // Debug log for each item
+              console.log("Rendering item:", {
+                id: item.id,
+                title: item.title,
+                user_email: item.user_email,
+                user_name: item.user_name,
+              });
+
+              return `
+    <div class="item-card bg-white rounded-lg overflow-hidden shadow-md border border-gray-100">
+    <div class="h-48 bg-gray-100 overflow-hidden">
+        ${
+          item.image_url
+            ? `
+            <img src="${item.image_url}" alt="${item.title}" 
+                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
+                 onclick="showImageModal('${item.image_url}')">
+        `
+            : `
+            <div class="w-full h-full flex items-center justify-center bg-gray-100 cursor-pointer"
+                 onclick="showImageModal('')">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+            </div>
+        `
+        }
+    </div>
+    <div class="p-4">
+        <h3 class="font-bold text-lg text-gray-900 truncate">${item.title}</h3>
+        <p class="text-gray-600 mt-1 line-clamp-2">${item.description}</p>
+        
+        <div class="mt-4 pt-4 border-t border-gray-100">
+            <div class="flex justify-between items-center">
+                <span class="text-sm font-medium text-gray-900">${
+                  item.user_name
+                }</span>
+                <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">${
+                  item.pickup_location || "No location"
+                }</span>
+            </div>
+            
+            <!-- Updated Email Display Section -->
+            <div class="mt-2 p-2 bg-gray-50 rounded">
+                <p class="text-sm font-medium text-gray-700">Contact Email:</p>
+                ${
+                  item.user_email
+                    ? `
+                    <a href="mailto:${item.user_email}" 
+                       class="text-blue-600 hover:underline break-all">
+                       ${item.user_email}
+                    </a>
+                `
+                    : `
+                    <p class="text-sm text-gray-500">Not provided</p>
+                `
+                }
+            </div>
+            
+            <p class="mt-2 text-sm text-gray-700">
+                <span class="font-medium">Wants:</span> ${
+                  item.exchange_for || "Anything"
+                }
+            </p>
+        </div>
+    </div>
+</div>
+    `;
+            })
+            .join("");
+
+          // Setup search/filter
+          setupFilters(allItems);
+        } catch (error) {
+          console.error("Error loading items:", error);
+          document.getElementById("itemsContainer").innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <h3 class="mt-4 text-lg font-medium text-gray-900">Error loading items</h3>
+                        <p class="mt-1 text-gray-500">Please try again later</p>
+                        <button onclick="loadItems()" class="mt-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                            Retry
+                        </button>
+                    </div>
+                `;
+        }
+      }
+
+      // Show image modal
+      function showImageModal(imageUrl) {
+        if (!imageUrl) {
+          alert("No image available for this item");
+          return;
+        }
+        document.getElementById("modalImage").src = imageUrl;
+        document.getElementById("imageModal").classList.remove("hidden");
+      }
+
+      // Close image modal
+      function closeImageModal() {
+        document.getElementById("imageModal").classList.add("hidden");
+      }
+
+      // Filter functionality
+      function setupFilters(items) {
+        const searchInput = document.getElementById("searchInput");
+        const locationFilter = document.getElementById("locationFilter");
+
+        function applyFilters() {
+          const searchTerm = searchInput.value.toLowerCase();
+          const location = locationFilter.value;
+
+          document.querySelectorAll(".item-card").forEach((card) => {
+            const title = card.querySelector("h3").textContent.toLowerCase();
+            const desc = card.querySelector("p").textContent.toLowerCase();
+            const exchange = card
+              .querySelector("p:last-child")
+              .textContent.toLowerCase();
+            const cardLocation =
+              card.querySelector("span:last-child").textContent;
+
+            const matchesSearch =
+              title.includes(searchTerm) ||
+              desc.includes(searchTerm) ||
+              exchange.includes(searchTerm);
+
+            const matchesLocation =
+              !location || cardLocation.includes(location);
+
+            card.style.display =
+              matchesSearch && matchesLocation ? "block" : "none";
+          });
+        }
+
+        searchInput.addEventListener("input", applyFilters);
+        locationFilter.addEventListener("change", applyFilters);
+      }
+
+      // Initialize on page load
+      document.addEventListener("DOMContentLoaded", loadItems);
+    </script>
+  </body>
+</html>

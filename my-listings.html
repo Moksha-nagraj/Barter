@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Listings - Barter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-green-600">Barter</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="index.html" class="text-gray-700 hover:text-green-600">Browse Items</a>
+                    <a href="list-item.html" class="text-gray-700 hover:text-green-600">List Item</a>
+                    <a href="dashboard.html" class="text-gray-700 hover:text-green-600">Dashboard</a>
+                    <a href="profile.html" class="text-gray-700 hover:text-green-600">Profile</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button class="text-gray-500 hover:text-gray-600">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">Welcome back, Sarah!</h1>
+        </div>
+        
+        <p class="text-gray-600 mb-8">Here's your sustainability impact and activity</p>
+        
+        <!-- Tabs -->
+        <div class="border-b border-gray-200 mb-8">
+            <nav class="-mb-px flex space-x-8">
+                <a href="dashboard.html" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Overview</a>
+                <a href="my-swaps.html" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">My Swaps</a>
+                <a href="my-listings.html" class="border-green-500 text-green-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">My Listings</a>
+                <a href="profile.html" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Profile</a>
+            </nav>
+        </div>
+        
+        <!-- Listings -->
+        <div class="space-y-6">
+            <!-- Listing 1 -->
+            <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-start">
+                    <div class="flex items-start space-x-4 mb-4 md:mb-0">
+                        <img src="https://res.cloudinary.com/dcfatxyxm/image/upload/v1621234567/yoga-mat.jpg" 
+                             class="w-24 h-24 object-cover rounded-md">
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-900 mb-2">Yoga Mat & Blocks</h2>
+                            <p class="text-gray-600 mb-2">23 views • 5 people interested</p>
+                            <p class="text-sm text-gray-500">Posted 3 days ago</p>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="text-green-600 hover:text-green-800 px-3 py-1 border border-green-600 rounded-md transition-colors">Edit</button>
+                        <button class="text-gray-600 hover:text-gray-800 px-3 py-1 border border-gray-300 rounded-md transition-colors">Pause</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Listing 2 -->
+            <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-start">
+                    <div class="flex items-start space-x-4 mb-4 md:mb-0">
+                        <img src="https://res.cloudinary.com/dcfatxyxm/image/upload/v1621234567/kitchen-set.jpg" 
+                             class="w-24 h-24 object-cover rounded-md">
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-900 mb-2">Kitchen Appliance Set</h2>
+                            <p class="text-gray-600 mb-2">31 views • 8 people interested</p>
+                            <p class="text-sm text-gray-500">Posted 1 week ago</p>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="text-green-600 hover:text-green-800 px-3 py-1 border border-green-600 rounded-md transition-colors">Edit</button>
+                        <button class="text-gray-600 hover:text-gray-800 px-3 py-1 border border-gray-300 rounded-md transition-colors">Pause</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Listing 3 -->
+            <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-start">
+                    <div class="flex items-start space-x-4 mb-4 md:mb-0">
+                        <img src="https://res.cloudinary.com/dcfatxyxm/image/upload/v1621234567/board-games.jpg" 
+                             class="w-24 h-24 object-cover rounded-md">
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-900 mb-2">Board Game Collection</h2>
+                            <p class="text-gray-600 mb-2">15 views • 3 people interested</p>
+                            <p class="text-sm text-gray-500">Posted 2 weeks ago</p>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="text-green-600 hover:text-green-800 px-3 py-1 border border-green-600 rounded-md transition-colors">Edit</button>
+                        <button class="text-green-600 hover:text-green-800 px-3 py-1 border border-green-600 rounded-md transition-colors">Activate</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Add New Item -->
+            <a href="list-item.html" class="block bg-white p-6 rounded-lg shadow-sm border-2 border-dashed border-gray-300 text-center hover:border-green-500 transition-colors">
+                <span class="text-green-600 hover:text-green-800 font-medium">+ Add New Item</span>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <span class="text-xl font-bold">Barter</span>
+                    <p class="text-gray-400 mt-2">Building sustainable communities through sharing</p>
+                </div>
+                <div class="text-gray-400 text-sm">
+                    <p>© 2017-2024 Barter</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

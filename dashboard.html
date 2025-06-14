@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Barter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav
+      class="flex justify-between items-center bg-green-800 text-white fixed w-full top-0 left-0 right-0 z-50 shadow-md px-8 py-4"
+    >
+      <div
+        class="text-3xl font-bold bg-gradient-to-r from-green-400 via-green-500 to-green-600 bg-clip-text text-transparent tracking-tight"
+      >
+        BARTER
+      </div>
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center">
+        <!-- Nav Links -->
+        <div class="flex space-x-6 mr-6">
+          <a
+            href="index.html"
+            class="text-green-100 hover:text-white font-medium"
+            >Home</a
+          >
+          <a href="browse-items.html" class="text-white font-medium pb-1"
+            >Browse Items</a
+          >
+          <!-- <a
+            href="list-item.html"
+            class="text-green-100 hover:text-white font-medium"
+            >List Item</a
+          > -->
+          <a
+            href="dashboard.html"
+            class="text-green-100 hover:text-white font-medium"
+            >Dashboard</a
+          >
+        </div>
+
+        <!-- Search and Sign In -->
+        <div class="flex items-center">
+          <input
+            type="text"
+            placeholder="Search..."
+            class="px-3 py-1 rounded text-gray-800 focus:outline-none focus:ring-1 focus:ring-green-500"
+          />
+          <button
+            class="ml-3 px-4 py-1 bg-green-600 hover:bg-green-700 text-white rounded font-medium"
+          >
+            <a href="signin.html">Sign In</a>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden flex items-center">
+        <button class="text-white hover:text-gray-200 focus:outline-none">
+          <svg
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+    <!-- Dashboard Content -->
+    <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Welcome back, Sarah!</h1>
+      </div>
+
+      <p class="text-gray-600 mb-8">
+        Here's your sustainability impact and activity
+      </p>
+
+      <!-- Tabs -->
+      <div class="border-b border-gray-200 mb-8">
+        <nav class="-mb-px flex space-x-8">
+          <a
+            href="dashboard.html"
+            class="border-green-500 text-green-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+            >Overview</a
+          >
+          <a
+            href="my-swaps.html"
+            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+            >My Swaps</a
+          >
+          <a
+            href="my-listings.html"
+            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+            >My Listings</a
+          >
+          <a
+            href="profile.html"
+            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+            >Profile</a
+          >
+        </nav>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div
+          class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+        >
+          <p class="text-sm text-gray-500 mb-2">Total Swaps</p>
+          <p class="text-3xl font-bold text-gray-900">12</p>
+        </div>
+        <div
+          class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+        >
+          <p class="text-sm text-gray-500 mb-2">Items Listed</p>
+          <p class="text-3xl font-bold text-gray-900">8</p>
+        </div>
+        <div
+          class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+        >
+          <p class="text-sm text-gray-500 mb-2">CO₂ Saved</p>
+          <p class="text-3xl font-bold text-gray-900">2.4kg</p>
+        </div>
+        <div
+          class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+        >
+          <p class="text-sm text-gray-500 mb-2">Waste Reduced</p>
+          <p class="text-3xl font-bold text-gray-900">15.6kg</p>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Recent Swaps -->
+        <div
+          class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+        >
+          <h2 class="text-xl font-bold text-gray-900 mb-4">Recent Swaps</h2>
+          <ul class="space-y-4">
+            <li class="border-b border-gray-100 pb-4">
+              <p class="font-medium">Vintage Lamp for Home Items</p>
+              <p class="text-sm text-gray-500">Completed 2 days ago</p>
+            </li>
+            <li class="border-b border-gray-100 pb-4">
+              <p class="font-medium">Collection of Books for Art Prints</p>
+              <p class="text-sm text-gray-500">Completed 1 week ago</p>
+            </li>
+            <li>
+              <p class="font-medium">Coffee Maker for Blender</p>
+              <p class="text-sm text-gray-500">Completed 2 weeks ago</p>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Active Listings -->
+        <div
+          class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+        >
+          <h2 class="text-xl font-bold text-gray-900 mb-4">Active Listings</h2>
+          <ul class="space-y-4">
+            <li class="border-b border-gray-100 pb-4">
+              <p class="font-medium">Yoga Mat & Blocks</p>
+              <p class="text-sm text-gray-500">
+                23 views • 5 interested • Posted 3 days ago
+              </p>
+            </li>
+            <li class="border-b border-gray-100 pb-4">
+              <p class="font-medium">Kitchen Appliance Set</p>
+              <p class="text-sm text-gray-500">
+                31 views • 8 interested • Posted 1 week ago
+              </p>
+            </li>
+            <li>
+              <p class="font-medium">Board Game Collection</p>
+              <p class="text-sm text-gray-500">
+                15 views • 3 interested • Posted 2 weeks ago
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-4 md:mb-0">
+            <span class="text-xl font-bold">Barter</span>
+            <p class="text-gray-400 mt-2">
+              Building sustainable communities through sharing
+            </p>
+          </div>
+          <div class="text-gray-400 text-sm">
+            <p>© 2017-2024 Barter</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>

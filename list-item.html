@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Item - Barter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="profile.html" class="text-xl font-bold text-green-600">Barter</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-2xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-2xl font-bold mb-6">List New Item</h2>
+            
+            <form id="item-form" enctype="multipart/form-data" class="space-y-4">
+                <input type="hidden" id="user_id">
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Title*</label>
+                    <input type="text" id="title" required
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Description*</label>
+                    <textarea id="description" rows="3" required
+                              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"></textarea>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Want to exchange for*</label>
+                    <input type="text" id="exchange_for" required
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Pickup Location*</label>
+                    <input type="text" id="pickup_location" required
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                </div>
+                <div>
+    <label class="block text-sm font-medium text-gray-700">Category*</label>
+    <select id="category" required
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+        <!-- <option value="" disabled selected>Select a category</option> -->
+         <option value="" disabled hidden>Select a category</option>
+
+        <option value="Clothes">Clothes</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Home Items">Home Items</option>
+        <option value="Books">Books</option>
+        <option value="Sports">Sports</option>
+        <option value="Other">Other</option>
+    </select>
+</div>
+
+<div>
+    <label class="block text-sm font-medium text-gray-700">Condition*</label>
+    <select id="condition" required
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+        <option value="" disabled selected>Select condition</option>
+        <option value="New">New</option>
+        <option value="Like New">Like New</option>
+        <option value="Moderately Used">Moderately Used</option>
+        <option value="Used">Used</option>
+        <option value="Old">Old</option>
+    </select>
+</div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Item Image</label>
+                    <input type="file" id="image" accept="image/*" 
+                           class="mt-1 block w-full text-sm text-gray-500
+                                  file:mr-4 file:py-2 file:px-4
+                                  file:rounded-md file:border-0
+                                  file:text-sm file:font-semibold
+                                  file:bg-green-50 file:text-green-700
+                                  hover:file:bg-green-100">
+                </div>
+                
+                <button type="submit" 
+                        class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
+                    List Item
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Set user ID from localStorage
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) window.location.href = 'signin.html';
+        document.getElementById('user_id').value = user.id;
+
+        // Handle form submission
+        document.getElementById('item-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('user_id', user.id);
+            formData.append('title', document.getElementById('title').value);
+            formData.append('description', document.getElementById('description').value);
+            formData.append('exchange_for', document.getElementById('exchange_for').value);
+            formData.append('pickup_location', document.getElementById('pickup_location').value);
+            formData.append('category', document.getElementById('category').value);
+            formData.append('condition', document.getElementById('condition').value);
+                // 🔍 Debug logs
+             console.log('Category:', document.getElementById('category').value);
+             console.log('Condition:', document.getElementById('condition').value);
+
+            
+            const imageFile = document.getElementById('image').files[0];
+            if (imageFile) formData.append('image', imageFile);
+
+            try {
+                const response = await fetch('http://localhost:5000/items', {
+                    method: 'POST',
+                    body: formData  // No 'Content-Type' header for FormData!
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    alert('Item listed successfully!');
+                    window.location.href = 'profile.html';
+                } else {
+                    throw new Error(result.error || 'Failed to list item');
+                }
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Profile - Barter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .gradient-card {
+        background: linear-gradient(
+          135deg,
+          #f0fff4 0%,
+          #e6fffa 50%,
+          #f0fff4 100%
+        );
+        border: 1px solid #c6f6d5;
+      }
+      .gradient-card:hover {
+        background: linear-gradient(
+          135deg,
+          #e6fffa 0%,
+          #b2f5ea 50%,
+          #e6fffa 100%
+        );
+      }
+      .modal {
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "eco-green": {
+                50: "#f0fff4",
+                100: "#e6fffa",
+                200: "#b2f5ea",
+                300: "#81e6d9",
+                400: "#4fd1c5",
+                500: "#38b2ac",
+                600: "#319795",
+                700: "#2c7a7b",
+                800: "#285e61",
+                900: "#234e52",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Image Modal -->
+    <div
+      id="imageModal"
+      class="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 opacity-0 invisible"
+    >
+      <div class="relative max-w-4xl max-h-screen p-4">
+        <button
+          onclick="closeModal()"
+          class="absolute -top-10 right-0 text-white hover:text-eco-green-200"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-8 w-8"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+        <img
+          id="modalImage"
+          class="max-w-full max-h-[90vh] rounded-lg shadow-xl"
+          src=""
+          alt="Enlarged view"
+        />
+      </div>
+    </div>
+
+    <nav class="bg-white shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <span class="text-xl font-bold text-eco-green-800">Barter</span>
+          </div>
+          <div class="flex items-center space-x-4">
+            <a
+              href="list-item.html"
+              class="bg-eco-green-600 text-white px-4 py-2 rounded-md hover:bg-eco-green-700 transition-colors shadow-md"
+            >
+              + List Item
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      <!-- Profile Section -->
+      <div class="bg-white shadow rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-eco-green-800 mb-6">My Profile</h2>
+        <div class="gradient-card rounded-lg p-6 shadow-sm">
+          <h3 class="text-lg font-medium text-eco-green-700 mb-4">
+            Personal Info
+          </h3>
+          <div id="user-info" class="space-y-3 text-eco-green-900">
+            <!-- Filled by JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Listed Items Section -->
+      <div class="bg-white shadow rounded-lg p-6">
+        <h2 class="text-2xl font-bold text-eco-green-800 mb-6">
+          My Listed Items
+        </h2>
+        <div class="gradient-card rounded-lg p-6 shadow-sm">
+          <div
+            id="user-items"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          >
+            <!-- Filled by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Modal functions
+      function openModal(imageUrl) {
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        modalImg.src = imageUrl;
+        modal.classList.remove("invisible", "opacity-0");
+        modal.classList.add("opacity-100");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("imageModal");
+        modal.classList.remove("opacity-100");
+        modal.classList.add("invisible", "opacity-0");
+        document.body.style.overflow = "auto";
+      }
+
+      // Check if user is logged in
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) window.location.href = "signin.html";
+
+      // Display user info
+      document.getElementById("user-info").innerHTML = `
+            <div class="flex items-start space-x-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-eco-green-600 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                </svg>
+                <p><span class="font-semibold text-eco-green-700">Name:</span> ${
+                  user.full_name
+                }</p>
+            </div>
+            <div class="flex items-start space-x-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-eco-green-600 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                </svg>
+                <p><span class="font-semibold text-eco-green-700">Email:</span> ${
+                  user.email
+                }</p>
+            </div>
+            <div class="flex items-start space-x-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-eco-green-600 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                </svg>
+                <p><span class="font-semibold text-eco-green-700">Location:</span> ${
+                  user.location || "Not specified"
+                }</p>
+            </div>
+        `;
+
+      // Fetch user's items
+      fetch(`http://localhost:5000/user/${user.id}/items`)
+        .then((res) => res.json())
+        .then((items) => {
+          const container = document.getElementById("user-items");
+          if (items.length === 0) {
+            container.innerHTML = `
+                        <div class="col-span-full text-center py-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-eco-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                            </svg>
+                            <p class="mt-3 text-eco-green-600">No items listed yet.</p>
+                            <a href="list-item.html" class="mt-2 inline-block text-eco-green-700 hover:text-eco-green-900 font-medium">
+                                List your first item →
+                            </a>
+                        </div>
+                    `;
+          } else {
+            container.innerHTML = items
+              .map(
+                (item) => `
+                        <div class="gradient-card rounded-lg overflow-hidden transition-all duration-300 hover:shadow-md hover:scale-[1.02] relative ${
+                          item.is_swapped ? "grayscale" : ""
+                        }">
+                            ${
+                              item.is_swapped
+                                ? `
+                                <div class="absolute top-2 right-2 bg-green-600 text-white px-2 py-1 rounded-full text-xs font-bold z-10">
+                                    SWAPPED
+                                </div>
+                            `
+                                : ""
+                            }
+                            
+                            ${
+                              item.image_url
+                                ? `
+                                <div class="w-full h-48 overflow-hidden cursor-pointer" onclick="openModal('${item.image_url}')">
+                                    <img src="${item.image_url}" alt="${item.title}" 
+                                         class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                                </div>
+                            `
+                                : `
+                                <div class="w-full h-48 bg-eco-green-100 flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-eco-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                            `
+                            }
+                            
+                            <div class="p-4">
+                                <h4 class="font-bold text-eco-green-800 truncate">${
+                                  item.title
+                                }</h4>
+                                <p class="text-eco-green-700 text-sm mt-1 line-clamp-2">${
+                                  item.description
+                                }</p>
+                                <div class="mt-3 pt-3 border-t border-eco-green-200">
+                                    <p class="text-xs font-medium text-eco-green-600"><span class="font-semibold">Wanted:</span> ${
+                                      item.exchange_for || "Open to offers"
+                                    }</p>
+                                </div>
+                                
+                                ${
+                                  !item.is_swapped
+                                    ? `
+                                    <button onclick="markAsSwapped(${item.id}, this)" 
+                                            class="mt-3 w-full bg-eco-green-600 hover:bg-eco-green-700 text-white py-1 px-3 rounded text-xs font-medium transition-colors">
+                                        Mark as Swapped
+                                    </button>
+                                `
+                                    : ""
+                                }
+                            </div>
+                        </div>
+                    `
+              )
+              .join("");
+          }
+        })
+        .catch((error) => {
+          console.error("Error loading items:", error);
+          document.getElementById("user-items").innerHTML = `
+                    <div class="col-span-full text-center py-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <p class="mt-3 text-red-500">Error loading items. Please refresh the page.</p>
+                    </div>
+                `;
+        });
+
+      async function markAsSwapped(itemId, buttonElement) {
+        if (!confirm("Are you sure you want to mark this item as swapped?")) {
+          return;
+        }
+
+        try {
+          const response = await fetch(`/items/${itemId}/swapped`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error || "Failed to mark item as swapped");
+          }
+
+          // Success case
+          const card = buttonElement.closest(".gradient-card");
+
+          // Add grayscale effect
+          card.classList.add("grayscale");
+
+          // Add SWAPPED badge if not already present
+          if (!card.querySelector(".swapped-badge")) {
+            const badge = document.createElement("div");
+            badge.className =
+              "swapped-badge absolute top-2 right-2 bg-green-600 text-white px-2 py-1 rounded-full text-xs font-bold z-10";
+            badge.textContent = "SWAPPED";
+            card.prepend(badge);
+          }
+
+          // Remove the button
+          buttonElement.remove();
+        } catch (error) {
+          console.error("Error:", error);
+          alert(
+            `Error: ${error.message}\n\nPlease check your connection and try again.`
+          );
+        }
+      }
+    </script>
+  </body>
+</html>

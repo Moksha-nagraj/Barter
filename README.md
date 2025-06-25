@@ -36,4 +36,4 @@ Other Tools:
 - 🧪 Postman (for API testing)
 - ☁️ Cloudinary (for image hosting)
 - 📦 Multer (for file/image uploads)
-- Tailwind
+- Tailwind CSS for styling

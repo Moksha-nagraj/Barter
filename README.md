@@ -36,4 +36,4 @@ Other Tools:
 - 🧪 Postman (for API testing)
 - ☁️ Cloudinary (for image hosting)
 - 📦 Multer (for file/image uploads)
-- ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)Tailwind css for styling
+- 🌊 Tailwind CSS for styling.

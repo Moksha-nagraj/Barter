@@ -6,12 +6,12 @@ A web-based platform that allows users to **list items**, **browse listings**, a
 ## 📸 Screenshots
 
 ### 🏠 Home Screen
-![Home Screen](./Home_Page1.jpg)
+![Home Screen](./Home_page1.jpg)
 ![Home Screen2](./Home_Page2.jpg)
 
 ### 📊 Dashboard (Browse Items Page)
-![Dashboard](./dashboard1.jpg)
-![Dashboard2](./dashboard2.jpg)
+![Dashboard](./Dashboard1.jpg)
+![Dashboard2](./Dashboard2.jpg)
 
 ---
 
